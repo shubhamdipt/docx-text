@@ -25,7 +25,7 @@ from setuptools import setup, find_packages
 links = []  # for repo urls (dependency_links)
 
 DESCRIPTION = "A python module for converting docx files from SharePoint, One Drive to text"
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 
 
 with open("README.md", "r") as fh:

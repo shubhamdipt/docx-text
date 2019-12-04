@@ -36,6 +36,9 @@ class DocFile:
         prefix, root_tag = tag.split(':')
         return '{{{}}}{}'.format(name_space_map[prefix], root_tag)
 
+    def _get_xml_document_type(self):
+        return [i for i in self.file_list if re.match('word/document\d?.xml', i)]
+
     def _get_header_footer_text(self, type_name):
         """Gets the header text from header files found."""
         xmls = 'word/{}[0-9]*.xml'.format(type_name)
@@ -62,7 +65,9 @@ class DocFile:
         # Header text
         self._get_header_footer_text(type_name="header")
         # Main text
-        self.text += self._xml_text(self.zip_doc.read('word/document.xml'))
+        xml_doc_type = self._get_xml_document_type()
+        if xml_doc_type:
+            self.text += self._xml_text(self.zip_doc.read(xml_doc_type[0]))
         # Footer text
         self._get_header_footer_text(type_name="footer")
         self.zip_doc.close()
